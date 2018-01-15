@@ -12,21 +12,20 @@
 
 ActiveRecord::Schema.define(version: 20180115064935) do
 
-  create_table "items", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
+  create_table "items", force: :cascade do |t|
     t.string "name"
     t.boolean "done"
-    t.bigint "todo_id"
+    t.integer "todo_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["todo_id"], name: "index_items_on_todo_id"
   end
 
-  create_table "todos", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
+  create_table "todos", force: :cascade do |t|
     t.string "title"
     t.string "created_by"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  add_foreign_key "items", "todos"
 end
