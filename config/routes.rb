@@ -15,4 +15,6 @@ Rails.application.routes.draw do
   post 'auth/login', to: 'authentication#authenticate'
   post 'signup', to: 'users#create'
 
+  post 'highfive/transter_highfive', to: 'highfive#transter_highfive'
+
 end
