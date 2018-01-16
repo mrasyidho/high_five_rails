@@ -12,10 +12,11 @@
 
 ActiveRecord::Schema.define(version: 20180115153311) do
 
-  create_table "high_five_logs", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+  create_table "high_five_logs", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
     t.integer "user_from"
     t.integer "user_to"
     t.integer "count"
+    t.string "comment"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

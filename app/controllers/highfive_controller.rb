@@ -1,14 +1,15 @@
 class HighfiveController < ApplicationController
   def transter_highfive
-    puts 'transfer'
     user_to = User.find(todo_params[:user_to])
-
-    count = todo_params[:count]
-    puts current_user.to_s
-    if add_high_five(current_user, user_to, count)
-      json_response_data({"message" => "success"})
-    else
+    if user_to.id == current_user.id
       json_response_data({"message" => "fail"})
+    else
+      count = todo_params[:count]
+      if add_high_five(current_user, user_to, count, todo_params[:comment])
+        json_response_data({"message" => "success"})
+      else
+        json_response_data({"message" => "fail"})
+      end
     end
   end
 
@@ -23,26 +24,26 @@ class HighfiveController < ApplicationController
 
   def get_highfive_contributor
     highfive_log_list = HighFiveLog.where(:user_to => current_user.id)
-    json_response_data(highfive_log_list)
+    json_response(highfive_log_list)
   end
 
   private
 
-  def add_high_five(from, to, count)
+  def add_high_five(from, to, count, comment)
     return false if from.highfive < count
     to.add_highfive(count)
     from.add_highfive(-count)
     to.save!
     from.save!
-    highfive_log(from, to, count)
+    highfive_log(from, to, count, comment)
     true
   end
 
-  def highfive_log(from, to, count)
-    HighFiveLog.create!(:user_to => to.id, :user_from => from.id, :count => count)
+  def highfive_log(from, to, count, comment)
+    HighFiveLog.create!(:user_to => to.id, :user_from => from.id, :count => count, :comment => comment)
   end
 
   def todo_params
-    params.permit(:user_to, :count, :highfive)
+    params.permit(:user_to, :count, :comment, :highfive)
   end
 end

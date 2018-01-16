@@ -4,6 +4,7 @@ class CreateHighFiveLogs < ActiveRecord::Migration[5.1]
       t.integer :user_from
       t.integer :user_to
       t.integer :count
+      t.string :comment
 
       t.timestamps
     end
