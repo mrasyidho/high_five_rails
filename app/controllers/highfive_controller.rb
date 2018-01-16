@@ -6,10 +6,24 @@ class HighfiveController < ApplicationController
     count = todo_params[:count]
     puts current_user.to_s
     if add_high_five(current_user, user_to, count)
-      json_response({"message" => "success"})
+      json_response_data({"message" => "success"})
     else
-      json_response({"message" => "fail"})
+      json_response_data({"message" => "fail"})
     end
+  end
+
+  def get_current_highfive
+    json_response_data({"highfive" => current_user.highfive})
+  end
+
+  def top_highfive_score
+    top_user = User.all.order(highfive: :desc).map{|a| {"name" => a.name, "highfive" => a.highfive}}
+    json_response_data(top_user)
+  end
+
+  def get_highfive_contributor
+    highfive_log_list = HighFiveLog.where(:user_to => current_user.id)
+    json_response_data(highfive_log_list)
   end
 
   private

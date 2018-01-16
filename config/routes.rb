@@ -16,5 +16,8 @@ Rails.application.routes.draw do
   post 'signup', to: 'users#create'
 
   post 'highfive/transter_highfive', to: 'highfive#transter_highfive'
+  get 'highfive/get_current_highfive', to: 'highfive#get_current_highfive'
+  get 'highfive/top_highfive_score', to: 'highfive#top_highfive_score'
+  get 'highfive/get_highfive_contributor', to: 'highfive#get_highfive_contributor'
 
 end
